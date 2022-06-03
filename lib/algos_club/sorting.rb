@@ -1,7 +1,8 @@
 module AlgosClub::Sorting
   extend self
 
-  def buble_sort
+  def bubble_sort(collection)
+    return collection
   end
 
   def selection_sort
