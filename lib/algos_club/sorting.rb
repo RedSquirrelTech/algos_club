@@ -28,13 +28,11 @@ module AlgosClub::Sorting
   end
 
   def selection_sort!(collection)
-      results = []
+    results = []
 
-      collection.length.times do
-        min_i = min_index(collection)
-        results << collection[min_i]
-        collection.delete_at(min_i)
-      end
+    collection.length.times do
+      results << collection.delete_at(min_index(collection))
+    end
 
     results
   end
