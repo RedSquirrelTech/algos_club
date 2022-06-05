@@ -28,12 +28,18 @@ module AlgosClub::Sorting
   end
 
   def selection_sort!(collection)
+    # create a new array to store the results
     results = []
 
+    # loop once for every element in the collection
     collection.length.times do
+      # find the minimum item by index
+      # remove it from `collection`
+      # add it to the `results`
       results << collection.delete_at(min_index(collection))
     end
 
+    # return the results array
     results
   end
 
@@ -41,18 +47,25 @@ module AlgosClub::Sorting
   end
 
   def swap!(collection, from_index, to_index)
+    # temporarily store the item at the `from_index`
     tmp = collection[from_index]
+    # set the value of the `from_index` to that of the item located at the `to_index`
     collection[from_index] = collection[to_index]
+    # update the item at the `to_index` with what was located at the `from_index`
     collection[to_index] = tmp
   end
 
   def min_index(collection)
+    # set the min_index to the first item in the collection
     min_index = 0
+    # loop over the collection
     collection.each_with_index do |item, index|
+      # update the min_index anytime we find an item with a lower value
       if collection[min_index] > item
         min_index = index
       end
     end
+    # return the min_index, which is the position of the minimum value
     min_index
   end
 
