@@ -43,6 +43,32 @@ module AlgosClub::Sorting
     results
   end
 
+
+  def quick_sort!(collection)
+    if collection.length < 2
+      #base case
+      return collection
+    else
+      #recursive case
+      pivot_idx = collection.length/2
+      # destuctive and return el
+      pivot_el = collection.delete_at(pivot_idx)
+      high,low = [], []
+
+      collection.each do |el|
+        if el > pivot_el
+          high.push(el)
+          # push into high  
+        else
+          low.push(el)
+          # push into low
+        end
+      end
+
+      return quick_sort!(low) + [pivot_el] + quick_sort!(high)
+    end
+  end
+      
   def insertion_sort!(collection)
     i = 1
     while i < collection.length do
