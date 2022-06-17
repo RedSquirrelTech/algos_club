@@ -23,6 +23,16 @@ RSpec.describe "sorting algorithms" do
     end
   end
 
+  describe "insertion_sort" do
+    it "sorting an empty collection returns an empty collection" do
+      expect(AlgosClub::Sorting.insertion_sort!([])).to be_empty
+    end
+
+    it "sorts the collection" do
+      expect(AlgosClub::Sorting.insertion_sort!(sample)).to eq([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+    end
+  end
+
   describe "swap!" do
     let(:from) { 0 }
     let(:to)   { 1 }
