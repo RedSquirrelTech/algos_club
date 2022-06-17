@@ -43,6 +43,7 @@ module AlgosClub::Sorting
     results
   end
 
+
   def quick_sort!(collection)
     if collection.length < 2
       #base case
@@ -66,6 +67,19 @@ module AlgosClub::Sorting
 
       return quick_sort!(low) + [pivot_el] + quick_sort!(high)
     end
+  end
+      
+  def insertion_sort!(collection)
+    i = 1
+    while i < collection.length do
+      j = i
+      while j > 0 && collection[j-1] > collection[j] do
+        swap!(collection, j-1, j)
+        j -= 1
+      end
+      i += 1
+    end
+    collection
   end
 
   def swap!(collection, from_index, to_index)
