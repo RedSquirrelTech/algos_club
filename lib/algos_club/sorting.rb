@@ -58,7 +58,7 @@ module AlgosClub::Sorting
       collection.each do |el|
         if el > pivot_el
           high.push(el)
-          # push into high  
+          # push into high
         else
           low.push(el)
           # push into low
@@ -68,7 +68,7 @@ module AlgosClub::Sorting
       return quick_sort!(low) + [pivot_el] + quick_sort!(high)
     end
   end
-      
+
   def insertion_sort!(collection)
     i = 1
     while i < collection.length do
@@ -80,6 +80,28 @@ module AlgosClub::Sorting
       i += 1
     end
     collection
+  end
+
+  def merge_sort(collection)
+    # base case
+    return collection if collection.length <= 1
+
+    a, b = [], []
+    # divide collection into two arrays
+    collection.each_with_index do |el, index|
+      if index < collection.length/2
+        a << el
+      else
+        b << el
+      end
+    end
+
+    # recursively call merge_sort on each division of the collection
+    a = merge_sort(a)
+    b = merge_sort(b)
+
+    # merge the sub lists
+    merge(a, b)
   end
 
   def swap!(collection, from_index, to_index)
@@ -105,4 +127,24 @@ module AlgosClub::Sorting
     min_index
   end
 
+  def merge(col_a, col_b)
+    # create a new collection to hold the results
+    results = []
+
+    while !col_a.empty? && !col_b.empty? do
+      # add the smallest item from either a or b to the results
+      if col_a.first <= col_b.first
+        results << col_a.delete_at(0)
+      else
+        results << col_b.delete_at(0)
+      end
+    end
+
+    # append which ever list still has items to the results
+    if col_a.empty?
+      results + col_b
+    else
+      results + col_a
+    end
+  end
 end

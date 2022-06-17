@@ -32,7 +32,7 @@ RSpec.describe "sorting algorithms" do
       expect(AlgosClub::Sorting.quick_sort!(sample)).to eq([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
     end
   end
-  
+
   describe "insertion_sort" do
     it "sorting an empty collection returns an empty collection" do
       expect(AlgosClub::Sorting.insertion_sort!([])).to be_empty
@@ -40,6 +40,16 @@ RSpec.describe "sorting algorithms" do
 
     it "sorts the collection" do
       expect(AlgosClub::Sorting.insertion_sort!(sample)).to eq([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+    end
+  end
+
+  describe "merge_sort" do
+    it "sorting an empty collection returns an empty collection" do
+      expect(AlgosClub::Sorting.merge_sort([])).to be_empty
+    end
+
+    it "sorts the collection" do
+      expect(AlgosClub::Sorting.merge_sort(sample)).to eq([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
     end
   end
 
@@ -60,6 +70,32 @@ RSpec.describe "sorting algorithms" do
   describe "smallest_index" do
     it "returns the index of the min value" do
       expect(AlgosClub::Sorting.min_index(sample)).to be 4
+    end
+  end
+
+  describe "merge" do
+    it "returns a sorted list with the contents of both lists" do
+      a = [2]
+      b = [1]
+      expect(AlgosClub::Sorting.merge(a, b)).to match_array [1,2]
+    end
+
+    it "returns a sorted list with the contents of both lists when not the same size" do
+      a = [2, 3]
+      b = [1, 4, 5, 6]
+      expect(AlgosClub::Sorting.merge(a, b)).to match_array [1,2,3,4,5,6]
+    end
+
+    it "returns a sorted list with the contents of both lists when not the same size regardless of positional args" do
+      a = [1, 4, 5, 6]
+      b = [2, 3]
+      expect(AlgosClub::Sorting.merge(a, b)).to match_array [1,2,3,4,5,6]
+    end
+
+    it "returns a sorted list with all the same contents" do
+      a = [17, 17]
+      b = [17, 17]
+      expect(AlgosClub::Sorting.merge(a, b)).to match_array [17,17,17,17]
     end
   end
 end
