@@ -6,7 +6,7 @@ module AlgosClub::Sorting
     still_swappin = true
 
     # start loop, go until we haven't swapped any indexes
-    while still_swappin do
+    while still_swappin
       # start the loop assuming that everything is sorted
       still_swappin = false
       # go through indexes in the array
@@ -23,8 +23,7 @@ module AlgosClub::Sorting
 
     # if we've arrived here, it means we go through an entire loop
     # without swapping, which means everything should be sorted
-    return collection
-
+    collection
   end
 
   def selection_sort!(collection)
@@ -43,17 +42,16 @@ module AlgosClub::Sorting
     results
   end
 
-
   def quick_sort!(collection)
     if collection.length < 2
-      #base case
-      return collection
+      # base case
+      collection
     else
-      #recursive case
-      pivot_idx = collection.length/2
+      # recursive case
+      pivot_idx = collection.length / 2
       # destuctive and return el
       pivot_el = collection.delete_at(pivot_idx)
-      high,low = [], []
+      high, low = [], []
 
       collection.each do |el|
         if el > pivot_el
@@ -65,16 +63,16 @@ module AlgosClub::Sorting
         end
       end
 
-      return quick_sort!(low) + [pivot_el] + quick_sort!(high)
+      quick_sort!(low) + [pivot_el] + quick_sort!(high)
     end
   end
 
   def insertion_sort!(collection)
     i = 1
-    while i < collection.length do
+    while i < collection.length
       j = i
-      while j > 0 && collection[j-1] > collection[j] do
-        swap!(collection, j-1, j)
+      while j > 0 && collection[j - 1] > collection[j]
+        swap!(collection, j - 1, j)
         j -= 1
       end
       i += 1
@@ -89,7 +87,7 @@ module AlgosClub::Sorting
     a, b = [], []
     # divide collection into two arrays
     collection.each_with_index do |el, index|
-      if index < collection.length/2
+      if index < collection.length / 2
         a << el
       else
         b << el
@@ -131,12 +129,12 @@ module AlgosClub::Sorting
     # create a new collection to hold the results
     results = []
 
-    while !col_a.empty? && !col_b.empty? do
+    while !col_a.empty? && !col_b.empty?
       # add the smallest item from either a or b to the results
-      if col_a.first <= col_b.first
-        results << col_a.delete_at(0)
+      results << if col_a.first <= col_b.first
+        col_a.delete_at(0)
       else
-        results << col_b.delete_at(0)
+        col_b.delete_at(0)
       end
     end
 

@@ -1,7 +1,7 @@
-require 'algos_club/sorting'
+require "algos_club/sorting"
 
 RSpec.describe "sorting algorithms" do
-  let(:sample){ [5, 9, 2, 1, 0, 3, 8, 4, 7, 6] }
+  let(:sample) { [5, 9, 2, 1, 0, 3, 8, 4, 7, 6] }
 
   describe "bubble_sort" do
     it "sorting an empty collection returns an empty collection" do
@@ -55,7 +55,7 @@ RSpec.describe "sorting algorithms" do
 
   describe "swap!" do
     let(:from) { 0 }
-    let(:to)   { 1 }
+    let(:to) { 1 }
 
     it "swaps position of two values in a collection" do
       dupped_sample = sample.dup
@@ -77,25 +77,25 @@ RSpec.describe "sorting algorithms" do
     it "returns a sorted list with the contents of both lists" do
       a = [2]
       b = [1]
-      expect(AlgosClub::Sorting.merge(a, b)).to match_array [1,2]
+      expect(AlgosClub::Sorting.merge(a, b)).to match_array [1, 2]
     end
 
     it "returns a sorted list with the contents of both lists when not the same size" do
       a = [2, 3]
       b = [1, 4, 5, 6]
-      expect(AlgosClub::Sorting.merge(a, b)).to match_array [1,2,3,4,5,6]
+      expect(AlgosClub::Sorting.merge(a, b)).to match_array [1, 2, 3, 4, 5, 6]
     end
 
     it "returns a sorted list with the contents of both lists when not the same size regardless of positional args" do
       a = [1, 4, 5, 6]
       b = [2, 3]
-      expect(AlgosClub::Sorting.merge(a, b)).to match_array [1,2,3,4,5,6]
+      expect(AlgosClub::Sorting.merge(a, b)).to match_array [1, 2, 3, 4, 5, 6]
     end
 
     it "returns a sorted list with all the same contents" do
       a = [17, 17]
       b = [17, 17]
-      expect(AlgosClub::Sorting.merge(a, b)).to match_array [17,17,17,17]
+      expect(AlgosClub::Sorting.merge(a, b)).to match_array [17, 17, 17, 17]
     end
   end
 end
