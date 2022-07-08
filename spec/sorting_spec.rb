@@ -98,4 +98,39 @@ RSpec.describe "sorting algorithms" do
       expect(AlgosClub::Sorting.merge(a, b)).to match_array [17, 17, 17, 17]
     end
   end
+
+  describe "heapify" do
+
+  end
+
+  describe "left_child_index" do
+    # let(:sample) { [5, 9, 2, 1, 0, 3, 8, 4, 7, 6] }
+                 # 5
+            #9 .       2
+        #1 .    0 . 3 .    8
+    #4     7  6
+    it "returns the index of the left child" do
+      current_index = 0
+      expect(AlgosClub::Sorting.left_child_index(sample, current_index)).to be 1
+      expect(sample[AlgosClub::Sorting.left_child_index(sample, current_index)]).to be 9
+
+      current_index = 1
+      expect(AlgosClub::Sorting.left_child_index(sample, current_index)).to be 3
+      expect(sample[AlgosClub::Sorting.left_child_index(sample, current_index)]).to be 1
+
+      current_index = 3
+      expect(AlgosClub::Sorting.left_child_index(sample, current_index)).to be 7
+      expect(sample[AlgosClub::Sorting.left_child_index(sample, current_index)]).to be 4
+
+      current_index = 2
+      expect(AlgosClub::Sorting.left_child_index(sample, current_index)).to be 5
+      expect(sample[AlgosClub::Sorting.left_child_index(sample, current_index)]).to be 3
+    end
+  end
+
+  describe "parent_index" do
+  end
+
+  describe "right_child_index" do
+  end
 end

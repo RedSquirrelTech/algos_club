@@ -145,4 +145,8 @@ module AlgosClub::Sorting
       results + col_a
     end
   end
+
+  def left_child_index(col, index)
+    i = (index * 2) + 1
+  end
 end
