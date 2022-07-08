@@ -100,15 +100,9 @@ RSpec.describe "sorting algorithms" do
   end
 
   describe "heapify" do
-
   end
 
   describe "left_child_index" do
-    # let(:sample) { [5, 9, 2, 1, 0, 3, 8, 4, 7, 6] }
-                 # 5
-            #9 .       2
-        #1 .    0 . 3 .    8
-    #4     7  6
     it "returns the index of the left child" do
       current_index = 0
       expect(AlgosClub::Sorting.left_child_index(sample, current_index)).to be 1
