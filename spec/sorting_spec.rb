@@ -123,8 +123,43 @@ RSpec.describe "sorting algorithms" do
   end
 
   describe "parent_index" do
+    it "returns the index of the parent" do
+      # let(:sample) { [5, 9, 2, 1, 0, 3, 8, 4, 7, 6] }
+      current_index = 0
+      expect(AlgosClub::Sorting.parent_index(sample, current_index)).to be nil
+
+      current_index = 1
+      expect(AlgosClub::Sorting.parent_index(sample, current_index)).to be 0
+      expect(sample[AlgosClub::Sorting.parent_index(sample, current_index)]).to be 5
+
+      current_index = 2
+      expect(AlgosClub::Sorting.parent_index(sample, current_index)).to be 0
+      expect(sample[AlgosClub::Sorting.parent_index(sample, current_index)]).to be 5
+
+      current_index = 3
+      expect(AlgosClub::Sorting.parent_index(sample, current_index)).to be 1
+      expect(sample[AlgosClub::Sorting.parent_index(sample, current_index)]).to be 9
+    end
   end
 
   describe "right_child_index" do
+    it "returns the index of the right child" do
+      # let(:sample) { [5, 9, 2, 1, 0, 3, 8, 4, 7, 6] }
+      current_index = 0
+      expect(AlgosClub::Sorting.right_child_index(sample, current_index)).to be 2
+      expect(sample[AlgosClub::Sorting.right_child_index(sample, current_index)]).to be 2
+
+      current_index = 1
+      expect(AlgosClub::Sorting.right_child_index(sample, current_index)).to be 4
+      expect(sample[AlgosClub::Sorting.right_child_index(sample, current_index)]).to be 0
+
+      current_index = 3
+      expect(AlgosClub::Sorting.right_child_index(sample, current_index)).to be 8
+      expect(sample[AlgosClub::Sorting.right_child_index(sample, current_index)]).to be 7
+
+      current_index = 2
+      expect(AlgosClub::Sorting.right_child_index(sample, current_index)).to be 6
+      expect(sample[AlgosClub::Sorting.right_child_index(sample, current_index)]).to be 8
+    end
   end
 end

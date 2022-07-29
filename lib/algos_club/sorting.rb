@@ -149,4 +149,13 @@ module AlgosClub::Sorting
   def left_child_index(col, index)
     (index * 2) + 1
   end
+
+  def right_child_index(col, index)
+    (index * 2) + 2
+  end
+
+  def parent_index(col, index)
+    return if index == 0
+    ((index - 1) / 2).floor
+  end
 end
