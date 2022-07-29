@@ -1,15 +1,15 @@
 # Heap Helpers
 
-Turning the array into a heap such that an array of `[9, 0, 1, 8, 2, 7, 3, 6, 4, 5]` becomes a tree that looks like:
+Turning the array into a heap such that an array of `[5, 9, 2, 1, 0, 3, 8, 4, 7, 6`] becomes a tree that looks like:
 
 ```
-                                 9
+                                 5
                               /     \
-                            0         1
+                            9         2
                          /    \      /   \
-                       8        2   7      3
+                       1        0   3      8
                      /   \     /
-                    6     4   5
+                    4     7   6
 
 ```
 
