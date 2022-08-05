@@ -146,16 +146,45 @@ module AlgosClub::Sorting
     end
   end
 
-  def left_child_index(col, index)
+  def left_child_index(index)
     (index * 2) + 1
   end
 
-  def right_child_index(col, index)
+  def right_child_index(index)
     (index * 2) + 2
   end
 
-  def parent_index(col, index)
+  def parent_index(index)
     return if index == 0
     ((index - 1) / 2).floor
+  end
+
+  def heapify(collection)
+    start_index = parent_index(collection.length - 1)
+
+    while start_index >= 0 do
+      sift_down(collection, start_index, collection.length - 1)
+      start_index -= 1
+    end
+  end
+
+  def sift_down(collection, start_index, stop_index)
+    root = start_index
+    while left_child_index(root) <= stop_index do
+      child = left_child_index(root)
+      swap_index = root
+
+      if collection[swap_index] && collection[child] && collection[swap_index] < collection[child]
+        swap_index = child
+      end
+
+      if child + 1 <= stop_index && collection[swap_index] && collection[child + 1] && collection[swap_index] < collection[child + 1]
+        swap_index = child + 1
+      end
+
+      return if swap_index == root
+      swap!(collection, root, swap_index)
+      root = swap_index
+    end
   end
 end
