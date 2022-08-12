@@ -102,6 +102,19 @@ module AlgosClub::Sorting
     merge(a, b)
   end
 
+  def heapsort(collection)
+    heapify(collection)
+    end_index = collection.length - 1
+
+    while end_index > 0
+      swap!(collection, 0, end_index)
+      end_index -= 1
+
+      sift_down(collection, 0, end_index)
+    end
+    collection
+  end
+
   def swap!(collection, from_index, to_index)
     # temporarily store the item at the `from_index`
     tmp = collection[from_index]
@@ -162,7 +175,7 @@ module AlgosClub::Sorting
   def heapify(collection)
     start_index = parent_index(collection.length - 1)
 
-    while start_index >= 0 do
+    while start_index >= 0
       sift_down(collection, start_index, collection.length - 1)
       start_index -= 1
     end
@@ -170,7 +183,7 @@ module AlgosClub::Sorting
 
   def sift_down(collection, start_index, stop_index)
     root = start_index
-    while left_child_index(root) <= stop_index do
+    while left_child_index(root) <= stop_index
       child = left_child_index(root)
       swap_index = root
 
