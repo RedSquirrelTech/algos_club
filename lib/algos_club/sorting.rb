@@ -102,7 +102,7 @@ module AlgosClub::Sorting
     merge(a, b)
   end
 
-  def heapsort(collection)
+  def heap_sort(collection)
     heapify(collection)
     end_index = collection.length - 1
 

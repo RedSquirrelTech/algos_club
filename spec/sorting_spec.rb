@@ -53,13 +53,13 @@ RSpec.describe "sorting algorithms" do
     end
   end
 
-  describe "heapsort" do
+  describe "heap_sort" do
     it "sorting an empty collection returns an empty collection" do
-      expect(AlgosClub::Sorting.heapsort([])).to be_empty
+      expect(AlgosClub::Sorting.heap_sort([])).to be_empty
     end
 
     it "sorts the collection" do
-      expect(AlgosClub::Sorting.heapsort(sample)).to eq([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+      expect(AlgosClub::Sorting.heap_sort(sample)).to eq([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
     end
   end
 
