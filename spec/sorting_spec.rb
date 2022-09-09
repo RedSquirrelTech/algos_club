@@ -177,4 +177,39 @@ RSpec.describe "sorting algorithms" do
       expect(sample).to eq [9, 7, 8, 5, 6, 3, 2, 4, 1, 0]
     end
   end
+
+  describe "tim_sort_no_gallop" do
+    # let(:sample) { [5, 9, 2, 1, 0, 3, 8, 4, 7, 6] }
+    it "sorting an empty collection returns an empty collection" do
+      expect(AlgosClub::Sorting.tim_sort_no_gallop([])).to be_empty
+    end
+
+    it "sorts the collection" do
+      expect(AlgosClub::Sorting.tim_sort_no_gallop(sample)).to eq([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+    end
+  end
+
+  # TODO: 
+  xdescribe "tim_sort" do
+    it "sorting an empty collection returns an empty collection" do
+      expect(AlgosClub::Sorting.tim_sort([])).to be_empty
+    end
+
+    it "sorts the collection" do
+      result = {
+        sorted_array: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        gallop_mode: false,
+      }
+      expect(AlgosClub::Sorting.tim_sort(sample)).to eq(result)
+    end
+
+    it "uses gallop mode" do
+      result = {
+        sorted_array: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        gallop_mode: true,
+      }
+
+      expect(AlgosClub::Sorting.tim_sort(sample)).to eq(result)
+    end
+  end
 end
