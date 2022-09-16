@@ -102,6 +102,69 @@ module AlgosClub::Sorting
     merge(a, b)
   end
 
+  def is_continuing_trend(local_run, local_trend, item)
+    if local_trend == "ascending"
+      item >= local_run[-1]
+    elsif local_trend == "descending"
+      item <= local_run[-1]
+    end
+  end 
+
+  def tim_sort_no_gallop(collection)
+    return collection if collection.length <= 1
+
+
+    min_run_length = 3
+    run_stack = []
+      local_run = []
+      local_trend = ''
+    #identifying runs
+    collection.each_with_index do |el , index|
+      if local_trend == 'create_min_run' && local_run.length >= min_run_length
+        local_trend = ''
+        self.insertion_sort!(local_run)
+        run_stack << local_run
+        local_run = []
+        local_trend = ''
+      elsif local_run.length == 0
+      elsif local_trend.empty? && el < local_run[-1]
+        local_trend = 'descending'
+      elsif local_trend.empty? && el > local_run[-1]
+        local_trend = 'ascending'
+      elsif is_continuing_trend(local_run, 'descending', el) && local_run.length >= min_run_length
+        reversed_run = local_run.reverse()
+        run_stack << reversed_run
+        local_run = []
+        local_trend = ''
+      elsif is_continuing_trend(local_run, 'ascending', el) && local_run.length >= min_run_length
+        run_stack << local_run
+        local_run = []
+        local_trend = ''
+      elsif local_run.length < min_run_length && index != collection.length-1
+        local_trend = 'create_min_run'
+      end
+
+      local_run << el
+
+      if index == collection.length-1 && local_run.length > 0
+        self.insertion_sort!(local_run)
+        run_stack << local_run
+      end
+    end
+    pp run_stack
+    puts 'RUN STACK BEFORE MERGING ^^^^'
+
+    while run_stack.length > 1
+      run1 = run_stack.pop()
+      run2 = run_stack.pop()
+      merged_run = self.merge(run1, run2)
+      run_stack << merged_run
+    end
+    puts run_stack
+    puts 'RUN STACK AFTER MERGING'
+    run_stack[0]
+  end
+
   def heap_sort(collection)
     heapify(collection)
     end_index = collection.length - 1
