@@ -180,12 +180,18 @@ RSpec.describe "sorting algorithms" do
 
   describe "tim_sort_no_gallop" do
     # let(:sample) { [5, 9, 2, 1, 0, 3, 8, 4, 7, 6] }
+    let(:sample2) {[1,1,2,0,3,4,10,8,7,6,6,5,100, -7, -6, -8 , -9] }
+
     it "sorting an empty collection returns an empty collection" do
       expect(AlgosClub::Sorting.tim_sort_no_gallop([])).to be_empty
     end
 
     it "sorts the collection" do
       expect(AlgosClub::Sorting.tim_sort_no_gallop(sample)).to eq([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+    end
+
+    it "sorts the collection" do
+      expect(AlgosClub::Sorting.tim_sort_no_gallop(sample2)).to eq([-9,-8,-7,-6, 0, 1, 1, 2, 3, 4, 5, 6, 6, 7, 8, 10, 100])
     end
   end
 
