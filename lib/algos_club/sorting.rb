@@ -102,13 +102,26 @@ module AlgosClub::Sorting
     merge(a, b)
   end
 
-  def is_continuing_trend(local_run, local_trend, item)
+  def is_continuing_trend(collection, start_index, end_index, local_trend)
     if local_trend == "ascending"
-      item >= local_run[-1]
+      collection[end_index] >= collection[start_index]
     elsif local_trend == "descending"
-      item <= local_run[-1]
+      collection[end_index] < collection[start_index]
     end
   end 
+
+  def identify_run(collection, start_index)
+    end_index = start_index+1
+    if collection[end_index] >= collection[start_index]
+      local_trend = "ascending"
+      start_index+=1
+      end_index+=1
+      while is_continuing_trend(collection, start_index, end_index, local_trend) do
+        end_index+=1
+      end
+    else
+  end
+  end
 
   def tim_sort_no_gallop(collection)
     return collection if collection.length <= 1
@@ -116,41 +129,66 @@ module AlgosClub::Sorting
 
     min_run_length = 3
     run_stack = []
-      local_run = []
-      local_trend = ''
+      # local_run = []
+      # local_trend = ''
     #identifying runs
-    collection.each_with_index do |el , index|
-      if local_trend == 'create_min_run' && local_run.length >= min_run_length
-        local_trend = ''
-        self.insertion_sort!(local_run)
-        run_stack << local_run
-        local_run = []
-        local_trend = ''
-      elsif local_run.length == 0
-      elsif local_trend.empty? && el < local_run[-1]
-        local_trend = 'descending'
-      elsif local_trend.empty? && el > local_run[-1]
-        local_trend = 'ascending'
-      elsif is_continuing_trend(local_run, 'descending', el) && local_run.length >= min_run_length
-        reversed_run = local_run.reverse()
-        run_stack << reversed_run
-        local_run = []
-        local_trend = ''
-      elsif is_continuing_trend(local_run, 'ascending', el) && local_run.length >= min_run_length
-        run_stack << local_run
-        local_run = []
-        local_trend = ''
-      elsif local_run.length < min_run_length && index != collection.length-1
-        local_trend = 'create_min_run'
-      end
-
-      local_run << el
-
-      if index == collection.length-1 && local_run.length > 0
-        self.insertion_sort!(local_run)
-        run_stack << local_run
-      end
+    start_index = 0
+    end_index = collection.length-1
+  
+    while start_index < end_index do
+      run_info = identify_run(collection, start_index)
     end
+    #while loop from begin of array to end
+      #count run function which determines increasing or decreasing and starting/ending indices of a run
+        #if 2nd element is greater than or equal to 1st element
+          # mark as increasing
+          # while loop until ^this is no longer true
+            # increment the ending index   
+        #else
+          # mark as decreasing
+          # while loop until this is no longer true
+            # increment the ending index 
+        #returns hash with starting index, ending index, and increasing/decreasing boolean
+      #reverse if its decreasing
+      #extend run if its not long enough
+        #determine the index to extend to either the distance to the end of the list or until the run length == minrun length
+        #copy collection using extend index and starting index
+        # insertion sort on list 
+      #push run onto stack using the determined indices
+      #set index for the while loop to start again    
+
+    # collection.each_with_index do |el , index|
+    #   if local_trend == 'create_min_run' && local_run.length >= min_run_length
+    #     local_trend = ''
+    #     self.insertion_sort!(local_run)
+    #     run_stack << local_run
+    #     local_run = []
+    #     local_trend = ''
+    #   elsif local_run.length == 0
+    #   elsif local_trend.empty? && el < local_run[-1]
+    #     local_trend = 'descending'
+    #   elsif local_trend.empty? && el > local_run[-1]
+    #     local_trend = 'ascending'
+    #   elsif is_continuing_trend(local_run, 'descending', el) && local_run.length >= min_run_length
+    #     reversed_run = local_run.reverse()
+    #     run_stack << reversed_run
+    #     local_run = []
+    #     local_trend = ''
+    #   elsif is_continuing_trend(local_run, 'ascending', el) && local_run.length >= min_run_length
+    #     run_stack << local_run
+    #     local_run = []
+    #     local_trend = ''
+    #   elsif local_run.length < min_run_length && index != collection.length-1
+    #     local_trend = 'create_min_run'
+    #   end
+
+    #   local_run << el
+
+    #   if index == collection.length-1 && local_run.length > 0
+    #     self.insertion_sort!(local_run)
+    #     run_stack << local_run
+    #   end
+    # end
     pp run_stack
     puts 'RUN STACK BEFORE MERGING ^^^^'
 
