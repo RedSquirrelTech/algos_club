@@ -102,112 +102,89 @@ module AlgosClub::Sorting
     merge(a, b)
   end
 
-  def is_continuing_trend(collection, start_index, end_index, local_trend)
-    if local_trend == "ascending"
-      collection[end_index] >= collection[start_index]
-    elsif local_trend == "descending"
-      collection[end_index] < collection[start_index]
-    end
-  end 
-
   def identify_run(collection, start_index)
-    end_index = start_index+1
-    if collection[end_index] >= collection[start_index]
-      local_trend = "ascending"
-      start_index+=1
-      end_index+=1
-      while is_continuing_trend(collection, start_index, end_index, local_trend) do
-        end_index+=1
-      end
-    else
-  end
-  end
+    # guard clause which returns start index, end_index as start_index, and local trend as increasing if the start index equals the collection's last index
+ 
+    # local trend is ascending by default
+    # assign end_index to start_index
 
-  def tim_sort_no_gallop(collection)
-    return collection if collection.length <= 1
+    # if the value at the start index in the collection is greater than the value of the end_index + 1
+      # while loop which runs if this same condition is true except we are only checking end index variable
+        #increment end index
+        # break loop if end index equals collection's last index
+      #end
+      #reassign local trend to decreasing
+    # else
+      # while loop which runs if the value at the end_index is less than or equal to end_index + 1
+        #increment end index
+        # break loop if end index equals collection's last index
+      #end 
 
-
-    min_run_length = 3
-    run_stack = []
-      # local_run = []
-      # local_trend = ''
-    #identifying runs
-    start_index = 0
-    end_index = collection.length-1
+    # return start_index, end_index and local trend in a hash
   
-    while start_index < end_index do
-      run_info = identify_run(collection, start_index)
+end
+
+def reverse_run!(collection, start_index, end_index)
+  # while starting index is less than end index and start index does not equal end index
+    # run swap in place
+    # increment start index by 1
+    # decrement end index by 1
+
+end
+
+def tim_sort_no_gallop(collection)
+  return collection if collection.length <= 1
+
+  #declare min_run_length, empty run_stack, starting index of collection: s, end index of collection: e
+  min_run_length = 3
+  run_stack = []
+  start_idx = 0
+  end_idx = collection.length - 1
+
+  # while loop which runs until s >= e
+  while (start_idx <= end_idx) do
+    # identify run based on collection, s and return the starting run index, end run index, and direction of the run
+    run_info = identify_run(collection, start_idx)
+    start_run_idx = run_info[0]
+    end_run_idx = run_info[1]
+    local_trend = run_info[2]
+    
+    # calculate run length based on run start and end indices
+    run_length = (end_run_idx - start_run_idx) + 1
+
+    # if trend of identified run is desending
+    if local_trend == 'descending'
+      # reverse the run in place
+      # TODO:
     end
-    #while loop from begin of array to end
-      #count run function which determines increasing or decreasing and starting/ending indices of a run
-        #if 2nd element is greater than or equal to 1st element
-          # mark as increasing
-          # while loop until ^this is no longer true
-            # increment the ending index   
-        #else
-          # mark as decreasing
-          # while loop until this is no longer true
-            # increment the ending index 
-        #returns hash with starting index, ending index, and increasing/decreasing boolean
-      #reverse if its decreasing
-      #extend run if its not long enough
-        #determine the index to extend to either the distance to the end of the list or until the run length == minrun length
-        #copy collection using extend index and starting index
-        # insertion sort on list 
-      #push run onto stack using the determined indices
-      #set index for the while loop to start again    
 
-    # collection.each_with_index do |el , index|
-    #   if local_trend == 'create_min_run' && local_run.length >= min_run_length
-    #     local_trend = ''
-    #     self.insertion_sort!(local_run)
-    #     run_stack << local_run
-    #     local_run = []
-    #     local_trend = ''
-    #   elsif local_run.length == 0
-    #   elsif local_trend.empty? && el < local_run[-1]
-    #     local_trend = 'descending'
-    #   elsif local_trend.empty? && el > local_run[-1]
-    #     local_trend = 'ascending'
-    #   elsif is_continuing_trend(local_run, 'descending', el) && local_run.length >= min_run_length
-    #     reversed_run = local_run.reverse()
-    #     run_stack << reversed_run
-    #     local_run = []
-    #     local_trend = ''
-    #   elsif is_continuing_trend(local_run, 'ascending', el) && local_run.length >= min_run_length
-    #     run_stack << local_run
-    #     local_run = []
-    #     local_trend = ''
-    #   elsif local_run.length < min_run_length && index != collection.length-1
-    #     local_trend = 'create_min_run'
-    #   end
+    # if the run is smaller than minimimum run
+      # extend the run(by reassigning the ending index) to the smaller of either:
+        # the remaining distance to make the run equal to the minimum run or the distance to the end of the collection
+      # copy the run from the collection using start and end index
+      # run insertion sort on this copy in place
+    # else just copy run from the collection using start and end index
 
-    #   local_run << el
+    #push run onto run stack
 
-    #   if index == collection.length-1 && local_run.length > 0
-    #     self.insertion_sort!(local_run)
-    #     run_stack << local_run
-    #   end
-    # end
-    pp run_stack
-    puts 'RUN STACK BEFORE MERGING ^^^^'
-
-    while run_stack.length > 1
-      run1 = run_stack.pop()
-      run2 = run_stack.pop()
-      merged_run = self.merge(run1, run2)
-      run_stack << merged_run
-    end
-    puts run_stack
-    puts 'RUN STACK AFTER MERGING'
-    run_stack[0]
+    # reassign s to the run's end index and add 1
+  # end of while loop 
   end
+  
+  # while run stack length is greater than 1
+    # pop off two runs and save them in vars
+    # merge two runs
+    # push the merged run onto the top of the stack
+  # end of while loop
+
+  # return the remaining sorted single array in the run stack
+end
 
   def heap_sort(collection)
     heapify(collection)
     end_index = collection.length - 1
 
-    while end_index > 0
+    while end_index > 0 
       swap!(collection, 0, end_index)
       end_index -= 1
 
