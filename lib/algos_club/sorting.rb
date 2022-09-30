@@ -1,3 +1,5 @@
+require 'pry'
+
 module AlgosClub::Sorting
   extend self
 
@@ -104,32 +106,49 @@ module AlgosClub::Sorting
 
   def identify_run(collection, start_index)
     # guard clause which returns start index, end_index as start_index, and local trend as increasing if the start index equals the collection's last index
+    last_index = collection.length - 1
+    return { run_start_idx: last_index, run_end_idx: last_index } if start_index == last_index
  
     # local trend is ascending by default
-    # assign end_index to start_index
+    # assign run_end_idx to start_index
+    local_trend = 'ascending'
+    run_end_idx = start_index
 
-    # if the value at the start index in the collection is greater than the value of the end_index + 1
+    # if the value at the start index in the collection is greater than the value of the run_end_idx + 1
+    if collection[start_index] > collection[run_end_idx + 1]
       # while loop which runs if this same condition is true except we are only checking end index variable
+      while (collection[start_index] > collection[run_end_idx + 1]) do
         #increment end index
+        run_end_idx += 1
         # break loop if end index equals collection's last index
+        break if run_end_idx == last_index
       #end
+      end
       #reassign local trend to decreasing
-    # else
-      # while loop which runs if the value at the end_index is less than or equal to end_index + 1
+      local_trend = 'decreasing'
+    else
+      # while loop which runs if the value at the run_end_idx is less than or equal to run_end_idx + 1
+      while (collection[run_end_idx] <= collection[run_end_idx + 1]) do
         #increment end index
+        run_end_idx += 1
         # break loop if end index equals collection's last index
-      #end 
-
-    # return start_index, end_index and local trend in a hash
-  
+        break if run_end_idx == last_index
+      end
+    end
+    # return start_index, run_end_idx and local trend in a hash
+    return { run_start_idx: start_index, run_end_idx: run_end_idx, local_trend: local_trend }
 end
 
-def reverse_run!(collection, start_index, end_index)
+def reverse_run!(collection, run_start_idx, run_end_idx)
   # while starting index is less than end index and start index does not equal end index
+  while (run_start_idx < run_end_idx && run_start_idx != run_end_idx) do
     # run swap in place
+    swap!(collection, run_start_idx, run_end_idx)
     # increment start index by 1
+    run_start_idx += 1
     # decrement end index by 1
-
+    run_end_idx -= 1
+  end
 end
 
 def tim_sort_no_gallop(collection)
@@ -145,15 +164,17 @@ def tim_sort_no_gallop(collection)
   while (start_idx <= end_idx) do
     # identify run based on collection, s and return the starting run index, end run index, and direction of the run
     run_info = identify_run(collection, start_idx)
-    start_run_idx = run_info[0]
-    end_run_idx = run_info[1]
-    local_trend = run_info[2]
+    run_start_idx = run_info[:run_start_idx]
+    run_end_idx = run_info[:run_end_idx]
+    local_trend = run_info[:local_trend]
     
     # calculate run length based on run start and end indices
-    run_length = (end_run_idx - start_run_idx) + 1
+    run_length = (run_end_idx - run_start_idx) + 1
 
     # if trend of identified run is desending
     if local_trend == 'descending'
+      reverse_run!(collection, run_start_idx, run_end_idx)
+      binding.pry
       # reverse the run in place
       # TODO:
     end

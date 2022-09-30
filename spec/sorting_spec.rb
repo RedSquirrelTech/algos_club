@@ -179,7 +179,6 @@ RSpec.describe "sorting algorithms" do
   end
 
   describe "tim_sort_no_gallop" do
-    # let(:sample) { [5, 9, 2, 1, 0, 3, 8, 4, 7, 6] }
     let(:sample2) {[1,1,2,0,3,4,10,8,7,6,6,5,100, -7, -6, -8 , -9] }
 
     it "sorting an empty collection returns an empty collection" do
