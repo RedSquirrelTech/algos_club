@@ -186,6 +186,7 @@ RSpec.describe "sorting algorithms" do
     end
 
     it "sorts the collection" do
+      #sample [5, 9, 2, 1, 0, 3, 8, 4, 7, 6]
       expect(AlgosClub::Sorting.tim_sort_no_gallop(sample)).to eq([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
     end
 
