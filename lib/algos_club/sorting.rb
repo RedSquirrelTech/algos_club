@@ -138,78 +138,86 @@ module AlgosClub::Sorting
     # binding.pry
     # return start_index, run_end_idx and local trend in a hash
     return { run_start_idx: start_index, run_end_idx: run_end_idx, local_trend: local_trend }
-end
-
-def reverse_run!(collection, run_start_idx, run_end_idx)
-  # while starting index is less than end index and start index does not equal end index
-  while (run_start_idx < run_end_idx && run_start_idx != run_end_idx) do
-    # run swap in place
-    swap!(collection, run_start_idx, run_end_idx)
-    # increment start index by 1
-    run_start_idx += 1
-    # decrement end index by 1
-    run_end_idx -= 1
   end
-end
 
-def tim_sort_no_gallop(collection)
-  return collection if collection.length <= 1
+  def reverse_run!(collection, run_start_idx, run_end_idx)
+    # while starting index is less than end index and start index does not equal end index
+    while (run_start_idx < run_end_idx && run_start_idx != run_end_idx) do
+      # run swap in place
+      swap!(collection, run_start_idx, run_end_idx)
+      # increment start index by 1
+      run_start_idx += 1
+      # decrement end index by 1
+      run_end_idx -= 1
+    end
+  end
 
-  #declare min_run_length, empty run_stack, starting index of collection: s, end index of collection: e
-  min_run_length = 3
-  run_stack = []
-  start_idx = 0
-  end_idx = collection.length - 1
+  def tim_sort_no_gallop(collection)
+    return collection if collection.length <= 1
 
-  # binding.pry
-  # while loop which runs until s >= e
-  while (start_idx <= end_idx) do
-    # identify run based on collection, s and return the starting run index, end run index, and direction of the run
-    run_info = identify_run(collection, start_idx)
-    run_start_idx = run_info[:run_start_idx]
-    run_end_idx = run_info[:run_end_idx]
-    local_trend = run_info[:local_trend]
+    #declare min_run_length, empty run_stack, starting index of collection: s, end index of collection: e
+    min_run_length = 3
+    run_stack = []
+    start_idx = 0
+    end_idx = collection.length - 1
+
     # binding.pry
-    
-    # calculate run length based on run start and end indices
-    run_length = (run_end_idx - run_start_idx) + 1
+    # while loop which runs until s >= e
+    while (start_idx <= end_idx) do
+      # identify run based on collection, s and return the starting run index, end run index, and direction of the run
+      run_info = identify_run(collection, start_idx)
+      run_start_idx = run_info[:run_start_idx]
+      run_end_idx = run_info[:run_end_idx]
+      local_trend = run_info[:local_trend]
+      # binding.pry
+      
+      # calculate run length based on run start and end indices
+      run_length = (run_end_idx - run_start_idx) + 1
 
-    # if trend of identified run is desending
-    if local_trend == 'descending'
-      # reverse the run in place
-      reverse_run!(collection, run_start_idx, run_end_idx)
+      # if trend of identified run is desending
+      if local_trend == 'descending'
+        # reverse the run in place
+        reverse_run!(collection, run_start_idx, run_end_idx)
+      end
+
+      # if the run is smaller than minimimum run
+      run = if run_length < min_run_length
+              # extend the run(by reassigning the ending index) to the smaller of either:
+                # the remaining distance to make the run equal to the minimum run or the distance to the end of the collection
+              run_end_idx += [min_run_length - run_length, end_idx - run_end_idx].min
+              # copy the run from the collection using start and end index
+              temp_run = collection[run_start_idx..run_end_idx]
+              # run insertion sort on this copy in place
+              insertion_sort!(temp_run)
+            # else just copy run from the collection using start and end index
+            else
+              collection[run_start_idx..run_end_idx]
+            end
+
+      # push run onto run stack
+      run_stack << run
+
+      # reassign s to the run's end index and add 1
+      start_idx = run_end_idx + 1
+    # end of while loop 
+    end
+    
+    # while run stack length is greater than 1
+    while run_stack.length > 1 do
+      # pop off two runs and save them in vars
+      run_a = run_stack.pop
+      run_b = run_stack.pop
+      # merge two runs
+      merged_runs = merge(run_a, run_b)
+      # TODO:
+      # push the merged run onto the top of the stack
+      run_stack << merged_runs
+    # end of while loop
     end
 
-    # if the run is smaller than minimimum run
-    run = if run_length < min_run_length
-            # extend the run(by reassigning the ending index) to the smaller of either:
-              # the remaining distance to make the run equal to the minimum run or the distance to the end of the collection
-            run_end_idx += [min_run_length - run_length, end_idx - run_end_idx].min
-            # copy the run from the collection using start and end index
-            temp_run = collection[run_start_idx..run_end_idx]
-            # run insertion sort on this copy in place
-            insertion_sort!(temp_run)
-          # else just copy run from the collection using start and end index
-          else
-            collection[run_start_idx..run_end_idx]
-          end
-
-    # push run onto run stack
-    run_stack << run
-
-    # reassign s to the run's end index and add 1
-    start_idx = run_end_idx + 1
-  # end of while loop 
+    # return the remaining sorted single array in the run stack
+    run_stack.pop
   end
-  
-  # while run stack length is greater than 1
-    # pop off two runs and save them in vars
-    # merge two runs
-    # push the merged run onto the top of the stack
-  # end of while loop
-
-  # return the remaining sorted single array in the run stack
-end
 
   def heap_sort(collection)
     heapify(collection)
